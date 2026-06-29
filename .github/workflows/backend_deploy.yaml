@@ -52,9 +52,7 @@ jobs:
           export use_mail_wasm_parser=${{ secrets.BACKEND_USE_MAIL_WASM_PARSER }}
 
           cd worker/
-          cat > wrangler.toml << 'WRANGLEREOF'
-${{ secrets.BACKEND_TOML }}
-WRANGLEREOF
+          echo "$BACKEND_TOML_B64" | base64 -d > wrangler.toml
 
           pnpm install --no-frozen-lockfile
 
@@ -80,3 +78,4 @@ WRANGLEREOF
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          BACKEND_TOML_B64: ${{ secrets.BACKEND_TOML_B64 }}
